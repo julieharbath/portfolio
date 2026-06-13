@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Julie Harbath — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Della+Respira&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #1F4A45;
+    --teal-deep: #163530;
+    --tangerine: #E8632A;
+    --gold: #EAA73D;
+    --olive: #A8B550;
+    --plum: #9C4F70;
+    --cream: #FBF3E6;
+    --ink: #2B2B26;
+    --gray: #7C7367;
+    --line: #EAE0CF;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Della Respira', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.6;
+  }
+  header.hero {
+    color: #fff;
+    padding: 90px 24px 70px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header.hero .blobs {
+    display: none;
+  }
+  header.hero::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    background-image: url('assets/hero-collage.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(12px);
+    z-index: 1;
+    pointer-events: none;
+  }
+  header.hero h1 {
+    font-size: 2.6rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 2;
+  }
+  header.hero p.tagline {
+    margin-top: 12px;
+    font-size: 1.2rem;
+    color: #FCEFE3;
+    font-weight: 300;
+    position: relative;
+    z-index: 2;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    background: var(--teal-deep);
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 14px 16px;
+  }
+  nav a {
+    color: #F6E6D8;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: background 0.2s, color 0.2s;
+  }
+  nav a:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+  section { padding: 24px 24px; max-width: 980px; margin: 0 auto; }
+  section h2 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 8px;
+    border-bottom: 4px solid var(--tangerine);
+    display: inline-block;
+    padding-bottom: 6px;
+  }
+  section > p.lead {
+    margin-top: 22px;
+    font-size: 1.08rem;
+    color: var(--ink);
+    max-width: 760px;
+  }
+
+  .links-row {
+    margin-top: 24px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .links-row a {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid var(--teal);
+    border-radius: 28px;
+    color: var(--teal);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+  }
+  .links-row a:hover { background: var(--teal); color: #fff; }
+  .links-row a.primary { background: var(--tangerine); color: #fff; border-color: var(--tangerine); }
+  .links-row a.primary:hover { background: var(--plum); border-color: var(--plum); }
+
+  .exp-heading {
+    margin-top: 40px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--teal);
+  }
+  .exp-list { margin-top: 8px; }
+  .exp-item {
+    display: flex;
+    gap: 24px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-date {
+    flex: 0 0 120px;
+    color: var(--gray);
+    font-size: 0.9rem;
+    padding-top: 2px;
+  }
+  .exp-role .role-line {
+    font-size: 1rem;
+  }
+  .exp-role .role-line .company { font-weight: 700; color: var(--teal); }
+  .exp-role .role-line .title { color: var(--gray); }
+  .exp-role .desc {
+    margin-top: 4px;
+    font-size: 0.92rem;
+    color: var(--ink);
+  }
+
+  /* Project cards as expandable boxes */
+  .project-grid {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .project-card {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    box-shadow: 0 2px 12px rgba(31,74,69,0.08);
+    overflow: hidden;
+  }
+  .project-card summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 22px;
+  }
+  .project-card summary::-webkit-details-marker { display: none; }
+  .project-card summary::marker { content: ""; }
+  .card-blob { width: 60px; height: 60px; flex-shrink: 0; }
+  .card-blob svg { width: 100%; height: 100%; display: block; }
+  .card-title { flex: 1; text-align: left; }
+  .card-title .role-tag {
+    font-size: 0.76rem;
+    color: var(--plum);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 4px;
+  }
+  .card-title h3 { color: var(--teal); font-size: 1.12rem; font-weight: 700; }
+  .expand-icon {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--cream);
+    border: 2px solid var(--teal);
+    color: var(--teal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    transition: transform 0.25s ease;
+  }
+  .project-card[open] .expand-icon { transform: rotate(135deg); }
+  .card-detail {
+    padding: 4px 22px 26px;
+    border-top: 1px solid var(--line);
+    margin: 0 22px;
+    padding-top: 18px;
+    text-align: center;
+  }
+  .card-detail img, .card-detail .diagram {
+    width: 100%;
+    max-width: 460px;
+    display: block;
+    margin: 0 auto 16px;
+  }
+  .card-detail img.flowchart-img {
+    max-width: 700px;
+  }
+  .card-detail p { font-size: 0.95rem; color: var(--ink); margin-bottom: 14px; text-align: left; }
+  .card-detail .relevance {
+    background: #FBEAD2;
+    border: 1px solid var(--gold);
+    padding: 14px;
+    font-size: 0.86rem;
+    color: var(--teal);
+    border-radius: 8px;
+    text-align: center;
+  }
+  .card-detail .relevance b { color: var(--teal); }
+  .card-detail .doc-link {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 8px 18px;
+    border: 2px solid var(--teal);
+    border-radius: 24px;
+    color: var(--teal);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.88rem;
+    transition: all 0.2s;
+  }
+  .card-detail .doc-link:hover { background: var(--teal); color: #fff; }
+
+  .writing-list { margin-top: 28px; display: flex; flex-direction: column; gap: 18px; }
+  .writing-item {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .writing-item > div { flex: 1; text-align: center; }
+  .writing-item h3 { color: var(--teal); font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; }
+  .writing-item p { font-size: 0.92rem; color: var(--gray); }
+  .writing-item a {
+    flex-shrink: 0;
+    padding: 8px 18px;
+    border: 2px solid var(--teal);
+    border-radius: 24px;
+    color: var(--teal);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.88rem;
+    transition: all 0.2s;
+  }
+  .writing-item a:hover { background: var(--teal); color: #fff; }
+
+  .skills-grid {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .skill-cat { text-align: center; }
+  .skill-cat h4 {
+    color: var(--teal);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .tag {
+    background: #F3E9D8;
+    color: var(--teal);
+    padding: 7px 14px;
+    border-radius: 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  footer#contact {
+    background: var(--teal-deep);
+    color: #F6E6D8;
+    text-align: center;
+    padding: 70px 24px;
+    margin-top: 40px;
+    font-size: 0.95rem;
+  }
+  .contact-wrap { max-width: 720px; margin: 0 auto; }
+  footer#contact h2 {
+    color: #fff;
+    font-size: 1.9rem;
+    font-weight: 700;
+    border-bottom: 4px solid var(--tangerine);
+    display: inline-block;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+  }
+  .contact-lead {
+    margin: 22px auto 0;
+    max-width: 600px;
+    font-size: 1.1rem;
+    color: #F6E6D8;
+  }
+  .contact-links {
+    margin-top: 24px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .contact-links a {
+    display: inline-block;
+    padding: 10px 22px;
+    border: 2px solid #F6E6D8;
+    border-radius: 28px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+  }
+  .contact-links a:hover { background: #fff; color: var(--teal-deep); }
+  .contact-links a.primary { background: var(--tangerine); border-color: var(--tangerine); color: #fff; }
+  .contact-links a.primary:hover { background: var(--gold); border-color: var(--gold); color: var(--teal-deep); }
+
+  .yap-box {
+    margin-top: 44px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 32px;
+    text-align: left;
+  }
+  .yap-box h3 {
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .yap-sub { color: #D8C4B0; font-size: 0.95rem; margin-bottom: 20px; }
+  .yap-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 14px;
+  }
+  .yap-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .yap-item:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.25); }
+  .yap-item summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+  .yap-item summary::-webkit-details-marker { display: none; }
+  .yap-item summary::marker { content: ""; }
+  .yap-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .yap-icon svg { width: 18px; height: 18px; }
+  .yap-text { color: #F6E6D8; font-size: 0.95rem; flex: 1; }
+  .yap-expand {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid #F6E6D8;
+    color: #F6E6D8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: transform 0.25s ease;
+  }
+  .yap-item[open] .yap-expand { transform: rotate(135deg); }
+  .yap-detail { padding: 0 16px 16px 64px; }
+  .yap-detail-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .yap-detail .yap-list-items { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .yap-detail .yap-list-items + .yap-detail-label { margin-top: 14px; }
+  .yap-detail .yap-list-items .title { display: block; font-weight: 600; font-size: 0.9rem; color: #fff; }
+  .yap-detail .yap-list-items .meta { display: block; font-size: 0.8rem; color: #D8C4B0; }
+  footer#contact .small { margin-top: 40px; color: #D8C4B0; font-size: 0.85rem; }
+
+  @media (max-width: 600px) {
+    header.hero h1 { font-size: 2rem; }
+    section { padding: 36px 18px; }
+    .project-card summary { flex-wrap: wrap; }
+    .exp-item { flex-direction: column; gap: 4px; }
+    .exp-date { flex: none; }
+    .yap-detail { padding-left: 16px; }
+    .skills-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <svg class="blobs" viewBox="0 0 1600 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <linearGradient id="gradTeal" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#2A5A54"/>
+        <stop offset="100%" stop-color="#163530"/>
+      </linearGradient>
+      <linearGradient id="gradPlum" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#B5688A"/>
+        <stop offset="100%" stop-color="#7E3D5A"/>
+      </linearGradient>
+      <linearGradient id="gradTangerine" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#F08A4B"/>
+        <stop offset="100%" stop-color="#D9531C"/>
+      </linearGradient>
+      <radialGradient id="gradGold" cx="35%" cy="35%" r="75%">
+        <stop offset="0%" stop-color="#F8CD81"/>
+        <stop offset="100%" stop-color="#E0922E"/>
+      </radialGradient>
+      <radialGradient id="gradOlive" cx="35%" cy="35%" r="75%">
+        <stop offset="0%" stop-color="#C5D585"/>
+        <stop offset="100%" stop-color="#93A23F"/>
+      </radialGradient>
+      <radialGradient id="gradTangerine2" cx="35%" cy="35%" r="75%">
+        <stop offset="0%" stop-color="#F6A579"/>
+        <stop offset="100%" stop-color="#D9531C"/>
+      </radialGradient>
+      <radialGradient id="gradPlum2" cx="35%" cy="35%" r="75%">
+        <stop offset="0%" stop-color="#D292AC"/>
+        <stop offset="100%" stop-color="#7E3D5A"/>
+      </radialGradient>
+      <radialGradient id="gradPink" cx="35%" cy="35%" r="75%">
+        <stop offset="0%" stop-color="#FCE0EC"/>
+        <stop offset="100%" stop-color="#EE94BE"/>
+      </radialGradient>
+      <radialGradient id="gradCream" cx="35%" cy="35%" r="75%">
+        <stop offset="0%" stop-color="#FFFFFF"/>
+        <stop offset="100%" stop-color="#E4D4BC"/>
+      </radialGradient>
+      <filter id="softBlur" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="26"/>
+      </filter>
+      <filter id="softBlurSmall" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="3"/>
+      </filter>
+    </defs>
+    <rect width="1600" height="400" fill="url(#gradTeal)"/>
+    <g filter="url(#softBlur)">
+      <path d="M0,210 C220,165 420,255 640,200 C860,145 1060,235 1280,185 C1400,160 1520,200 1600,180 L1600,400 L0,400 Z" fill="url(#gradPlum)"/>
+      <path d="M0,300 C260,265 460,335 720,300 C920,272 1120,325 1340,295 C1450,280 1540,305 1600,295 L1600,400 L0,400 Z" fill="url(#gradTangerine)"/>
+      <path d="M700,30 C770,0 865,45 848,105 C836,148 782,126 798,86 C810,55 752,68 736,108 C718,150 660,118 680,72 C690,50 694,40 700,30 Z" fill="url(#gradGold)" opacity="0.9"/>
+      <path d="M1060,250 C1120,222 1195,258 1182,318 C1172,365 1112,346 1128,308 C1140,280 1085,290 1072,332 C1058,376 992,352 1012,298 C1024,270 1035,260 1060,250 Z" fill="url(#gradOlive)" opacity="0.75"/>
+      <path d="M40,120 C100,85 180,130 165,195 C153,245 95,220 112,178 C125,145 65,160 50,205 C32,255 -30,225 -5,160 C8,128 20,135 40,120 Z" fill="url(#gradTangerine2)" opacity="0.85"/>
+      <path d="M1480,260 C1545,230 1610,275 1592,335 C1578,380 1520,358 1538,318 C1552,288 1495,300 1480,345 C1462,392 1395,365 1418,310 C1432,278 1455,272 1480,260 Z" fill="url(#gradPlum2)" opacity="0.85"/>
+    </g>
+    <g filter="url(#softBlurSmall)">
+      <circle cx="120" cy="70" r="11" fill="url(#gradPink)" opacity="0.85"/>
+      <circle cx="260" cy="150" r="8" fill="url(#gradPink)" opacity="0.75"/>
+      <circle cx="380" cy="60" r="14" fill="url(#gradPink)" opacity="0.85"/>
+      <circle cx="470" cy="220" r="9" fill="url(#gradPink)" opacity="0.8"/>
+      <circle cx="600" cy="320" r="12" fill="url(#gradPink)" opacity="0.75"/>
+      <circle cx="730" cy="160" r="8" fill="url(#gradPink)" opacity="0.85"/>
+      <circle cx="850" cy="260" r="11" fill="url(#gradPink)" opacity="0.8"/>
+      <circle cx="950" cy="70" r="9" fill="url(#gradPink)" opacity="0.75"/>
+      <circle cx="1080" cy="180" r="14" fill="url(#gradPink)" opacity="0.85"/>
+      <circle cx="1190" cy="320" r="8" fill="url(#gradPink)" opacity="0.8"/>
+      <circle cx="1300" cy="100" r="11" fill="url(#gradPink)" opacity="0.75"/>
+      <circle cx="1400" cy="230" r="9" fill="url(#gradPink)" opacity="0.85"/>
+      <circle cx="1520" cy="80" r="12" fill="url(#gradPink)" opacity="0.8"/>
+      <circle cx="200" cy="330" r="9" fill="url(#gradPink)" opacity="0.75"/>
+      <circle cx="1230" cy="40" r="8" fill="url(#gradPink)" opacity="0.85"/>
+    </g>
+    <g filter="url(#softBlurSmall)" opacity="0.9">
+      <path d="M6.6,2.0 C5.7,3.3 4.0,5.3 2.3,5.9 C-1.6,6.8 -5.1,8.0 -7.6,8.5 C-7.7,5.8 -7.8,-0.3 -7.8,-2.2 C-2.7,-5.0 -0.1,-7.6 4.9,-10.7 C5.4,-5.1 6.2,-2.0 6.6,2.0 Z" fill="url(#gradGold)" transform="translate(1012,29) rotate(80) scale(2)"/>
+      <path d="M15.6,-3.2 C14.1,3.5 11.3,7.2 9.0,12.3 C5.3,12.5 -5.8,12.6 -9.5,12.7 C-10.8,4.5 -11.5,-2.7 -12.5,-11.2 C-6.2,-12.5 -0.2,-14.1 3.2,-14.7 C6.3,-12.0 13.0,-8.2 15.6,-3.2 Z" fill="url(#gradOlive)" transform="translate(1301,243) rotate(208) scale(2)"/>
+      <path d="M18.2,-3.1 C16.8,2.3 14.4,9.6 12.8,13.3 C9.0,14.8 4.9,16.1 0.6,16.7 C-5.5,16.4 -8.4,16.1 -14.0,15.9 C-14.3,13.3 -15.3,7.5 -15.6,2.7 C-14.3,-5.4 -13.5,-10.0 -12.2,-15.5 C-10.3,-14.4 -6.1,-13.1 -2.0,-12.1 C1.1,-11.8 10.0,-11.4 12.9,-10.9 C15.2,-7.6 16.5,-5.4 18.2,-3.1 Z" fill="url(#gradTangerine2)" transform="translate(1372,133) rotate(142) scale(2)"/>
+      <path d="M24.7,6.0 C21.7,7.7 17.2,11.0 13.9,13.9 C9.7,16.0 3.0,19.4 -5.8,22.3 C-8.4,14.7 -13.3,2.9 -15.0,-2.5 C-13.9,-7.4 -11.5,-14.3 -10.5,-17.5 C-7.2,-19.3 4.7,-20.6 9.0,-22.8 C15.4,-17.8 21.2,-4.1 24.7,6.0 Z" fill="url(#gradPlum2)" transform="translate(210,151) rotate(290) scale(2)"/>
+      <path d="M17.9,-0.2 C17.9,2.3 17.8,7.0 17.8,12.0 C14.9,14.3 8.0,16.9 1.2,18.0 C-2.9,14.7 -8.8,9.4 -10.7,7.5 C-14.6,5.5 -18.3,1.1 -21.2,-1.5 C-20.2,-6.0 -19.2,-10.6 -18.8,-12.2 C-13.2,-12.9 -6.0,-13.3 1.9,-13.7 C5.5,-14.5 8.0,-15.1 11.8,-15.8 C13.6,-12.6 16.6,-2.8 17.9,-0.2 Z" fill="url(#gradCream)" transform="translate(366,68) rotate(206) scale(2)"/>
+      <path d="M8.2,1.4 C6.4,2.4 5.6,5.3 4.1,6.4 C3.5,8.6 2.4,11.1 1.9,12.6 C-1.4,11.4 -4.4,8.9 -7.0,5.9 C-10.8,5.4 -13.6,3.5 -15.4,2.8 C-13.1,-1.6 -12.2,-5.1 -10.0,-7.9 C-7.9,-9.1 -3.2,-9.9 0.6,-10.9 C4.3,-10.0 7.6,-9.2 8.8,-8.1 C8.7,-4.8 8.5,-0.4 8.2,1.4 Z" fill="url(#gradGold)" transform="translate(1158,42) rotate(18) scale(2)"/>
+      <path d="M16.2,-3.1 C14.6,2.3 11.3,7.3 9.0,11.3 C5.5,11.8 -4.3,12.8 -13.7,13.9 C-13.5,9.7 -13.3,5.5 -13.1,3.4 C-11.5,1.1 -8.3,-2.4 -4.7,-6.0 C1.5,-8.8 7.3,-11.2 10.6,-12.7 C11.6,-9.0 13.9,-5.7 16.2,-3.1 Z" fill="url(#gradOlive)" transform="translate(215,59) rotate(98) scale(2)"/>
+      <path d="M22.8,-7.0 C21.4,4.6 18.2,15.3 16.3,22.4 C3.3,21.9 -12.0,20.5 -17.3,20.0 C-16.5,10.6 -15.6,2.5 -14.2,-2.8 C-10.7,-4.9 -8.4,-8.2 -3.8,-10.7 C5.6,-12.2 8.4,-17.4 18.1,-19.1 C20.2,-16.3 22.0,-10.4 22.8,-7.0 Z" fill="url(#gradTangerine2)" transform="translate(983,76) rotate(311) scale(2)"/>
+      <path d="M7.9,-1.2 C8.9,3.0 10.5,6.4 11.4,10.7 C6.9,12.2 2.3,16.1 -2.6,18.1 C-7.6,16.5 -11.7,12.5 -16.0,10.4 C-15.2,8.4 -14.4,5.3 -14.0,2.0 C-13.3,-3.0 -12.5,-11.3 -12.0,-18.5 C-8.0,-18.2 -4.7,-18.1 1.0,-17.9 C5.0,-17.8 8.4,-17.8 12.4,-17.8 C11.6,-10.5 8.9,-5.2 7.9,-1.2 Z" fill="url(#gradPlum2)" transform="translate(1147,133) rotate(184) scale(2)"/>
+      <path d="M8.7,2.6 C5.8,3.7 4.1,5.8 1.2,7.6 C-0.5,6.5 -2.2,4.6 -4.6,3.9 C-5.3,0.5 -7.1,-4.1 -8.1,-7.9 C-4.6,-8.5 2.2,-8.8 6.2,-9.4 C7.3,-6.1 7.7,-0.8 8.7,2.6 Z" fill="url(#gradCream)" transform="translate(1266,73) rotate(354) scale(2)"/>
+      <path d="M15.1,0.2 C12.1,1.6 7.6,4.0 5.6,5.5 C2.8,7.1 1.3,8.4 -1.1,10.3 C-5.2,9.5 -10.3,8.0 -11.9,7.2 C-11.0,3.3 -10.6,0.2 -9.5,-2.5 C-6.7,-6.7 -4.4,-13.1 -1.9,-16.0 C-0.4,-14.6 4.0,-12.3 5.2,-11.0 C8.7,-8.0 13.1,-3.1 15.1,0.2 Z" fill="url(#gradGold)" transform="translate(282,330) rotate(271) scale(2)"/>
+    </g>
+  </svg>
+  <h1>Julie Harbath</h1>
+  <p class="tagline">AI Prototyping &middot; Data Integrity &middot; Ethical Documentation</p>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#writing">Writing &amp; Research</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="about">
+  <h2>About</h2>
+  <p class="lead">
+    I'm a rising senior at the University of Virginia studying Economics, with minors in Commerce and
+    Environmental Sciences. For the past two years, I've worked in Internal Audit and Risk &mdash;
+    building and deploying AI tools to turn unstructured documents into structured, trustworthy
+    information inside heavily regulated environments. I'm drawn to the AI Research, Ethics, and
+    Readiness Internship at NPR because it's the same core problem, applied to journalism and archives
+    I genuinely care about.
+  </p>
+  <div class="links-row">
+    <a class="primary" href="https://www.linkedin.com/in/julie-harbath/" target="_blank">LinkedIn</a>
+    <a href="mailto:julieharbath@gmail.com">Email Me</a>
+  </div>
+
+  <h3 class="exp-heading">Experience</h3>
+  <div class="exp-list">
+    <div class="exp-item">
+      <div class="exp-date">May 2026 &ndash; Present</div>
+      <div class="exp-role">
+        <div class="role-line"><span class="company">Duolingo</span> &mdash; <span class="title">Internal Audit Intern</span></div>
+        <div class="desc">Prototyping Claude-based tools to review financial reports and strengthen reporting controls.</div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date">May 2025 &ndash; Feb 2026</div>
+      <div class="exp-role">
+        <div class="role-line"><span class="company">KeyBank Corporation</span> &mdash; <span class="title">Internal Audit Intern</span></div>
+        <div class="desc">Built and deployed a Copilot knowledge agent for 170+ auditors; led regulatory scoping and risk walkthroughs.</div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date">May 2024 &ndash; Aug 2025</div>
+      <div class="exp-role">
+        <div class="role-line"><span class="company">Flagstar Bank</span> &mdash; <span class="title">Third Party Risk Management Senior Intern</span></div>
+        <div class="desc">Managed third-party compliance reviews and KRI reporting across ISO 27001, SOC 2, AML, and OFAC.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <h2>Projects</h2>
+  <p class="lead">
+    A few projects that illustrate how I approach AI-assisted work. Click any project to read more.
+  </p>
+
+  <div class="project-grid">
+
+    <details class="project-card">
+      <summary>
+        <div class="card-blob">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs><clipPath id="blobA"><path d="M50 4 C76 2 96 24 94 50 C92 78 70 96 44 94 C18 92 2 68 6 42 C10 18 28 6 50 4 Z"/></clipPath></defs>
+            <g clip-path="url(#blobA)">
+              <image href="assets/blob-a.jpg" x="0" y="0" width="100" height="100" preserveAspectRatio="xMidYMid slice"/>
+            </g>
+          </svg>
+        </div>
+        <div class="card-title">
+          <div class="role-tag">Independent Project &mdash; IA Take-Home Challenge</div>
+          <h3>AI Disclosure &amp; Process Documentation</h3>
+        </div>
+        <span class="expand-icon">+</span>
+      </summary>
+      <div class="card-detail">
+        <img class="flowchart-img" src="assets/flowchart.jpg" alt="Swimlane flowchart of a monthly sales reconciliation process, showing the Accountant and Accounting Director lanes, decision points, and document retention steps">
+        <a class="doc-link" href="assets/ia-take-home-challenge.pdf" target="_blank">View Full Submission (PDF)</a>
+        <p>
+          Reviewed a written walkthrough of a monthly financial reconciliation process and mapped it into
+          a swimlane flowchart &mdash; identifying actors, systems, decision points, and document-retention
+          requirements. Used Gemini for language editing, Lucidchart AI for layout, and an AI image tool
+          for illustration, then documented every AI tool used in a dedicated &ldquo;AI Disclosure&rdquo; section.
+        </p>
+        <div class="relevance">
+          <b>Why it's relevant:</b> This is the core RAD task in miniature &mdash; turning an unstructured
+          narrative into a structured, navigable asset, with transparent documentation of AI involvement.
+        </div>
+      </div>
+    </details>
+
+    <details class="project-card">
+      <summary>
+        <div class="card-blob">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs><clipPath id="blobB"><path d="M48 2 C72 6 90 22 92 46 C94 72 78 94 52 96 C26 98 4 80 4 54 C4 28 24 6 48 2 Z"/></clipPath></defs>
+            <g clip-path="url(#blobB)">
+              <image href="assets/blob-b.jpg" x="0" y="0" width="100" height="100" preserveAspectRatio="xMidYMid slice"/>
+            </g>
+          </svg>
+        </div>
+        <div class="card-title">
+          <div class="role-tag">Duolingo &mdash; Internal Audit Intern</div>
+          <h3>Financial Report Review &mdash; Claude Code Skill</h3>
+        </div>
+        <span class="expand-icon">+</span>
+      </summary>
+      <div class="card-detail">
+        <div class="diagram">
+          <svg viewBox="0 0 400 170" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:inherit;">
+            <rect x="10" y="20" width="115" height="56" rx="8" fill="#F3EEDD" stroke="#1F4A45" stroke-width="1.5"/>
+            <text x="67" y="44" text-anchor="middle" font-size="11" fill="#1F4A45" font-weight="600">Unstructured</text>
+            <text x="67" y="58" text-anchor="middle" font-size="11" fill="#1F4A45" font-weight="600">Financial Reports</text>
+            <rect x="10" y="94" width="115" height="56" rx="8" fill="#F3EEDD" stroke="#1F4A45" stroke-width="1.5"/>
+            <text x="67" y="118" text-anchor="middle" font-size="11" fill="#1F4A45" font-weight="600">Control &amp; Parameter</text>
+            <text x="67" y="132" text-anchor="middle" font-size="11" fill="#1F4A45" font-weight="600">Descriptions</text>
+            <path d="M125 50 L145 85" stroke="#E8632A" stroke-width="2" fill="none"/>
+            <path d="M125 120 L145 85" stroke="#E8632A" stroke-width="2" fill="none"/>
+            <rect x="145" y="60" width="110" height="50" rx="8" fill="#1F4A45"/>
+            <text x="200" y="80" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">Claude Code</text>
+            <text x="200" y="95" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">Skill</text>
+            <path d="M255 85 L295 85" stroke="#E8632A" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+            <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#E8632A"/></marker></defs>
+            <rect x="295" y="50" width="100" height="70" rx="8" fill="#FBEAD2" stroke="#EAA73D" stroke-width="1.5"/>
+            <text x="345" y="78" text-anchor="middle" font-size="11" fill="#9C4F70" font-weight="700">Flagged Issues</text>
+            <text x="345" y="93" text-anchor="middle" font-size="11" fill="#9C4F70" font-weight="700">for Review</text>
+          </svg>
+        </div>
+        <p>
+          Designed and deployed a Claude Code skill and prompt template that reviews 60+ financial
+          reports each quarter, cross-referencing them against control descriptions and source
+          parameters to flag potential issues using a consistent set of criteria before they reach
+          quarterly financial statements. (Outputs are confidential; diagram above shows the general approach.)
+        </p>
+        <div class="relevance">
+          <b>Why it's relevant:</b> Directly maps to &ldquo;transform unstructured legacy media into a
+          searchable, AI-indexed library&rdquo; and &ldquo;evaluate AI outputs for accuracy and bias.&rdquo;
+        </div>
+      </div>
+    </details>
+
+    <details class="project-card">
+      <summary>
+        <div class="card-blob">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs><clipPath id="blobC"><path d="M52 6 C78 10 94 32 90 56 C86 82 62 98 36 92 C12 86 0 60 8 36 C16 12 30 2 52 6 Z"/></clipPath></defs>
+            <g clip-path="url(#blobC)">
+              <image href="assets/blob-c.jpg" x="0" y="0" width="100" height="100" preserveAspectRatio="xMidYMid slice"/>
+            </g>
+          </svg>
+        </div>
+        <div class="card-title">
+          <div class="role-tag">KeyBank Corporation &mdash; Internal Audit Intern</div>
+          <h3>Internal Standards Q&amp;A Agent</h3>
+        </div>
+        <span class="expand-icon">+</span>
+      </summary>
+      <div class="card-detail">
+        <div class="diagram">
+          <svg viewBox="0 0 400 170" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:inherit;">
+            <rect x="10" y="57" width="120" height="56" rx="8" fill="#F3EEDD" stroke="#1F4A45" stroke-width="1.5"/>
+            <text x="70" y="81" text-anchor="middle" font-size="11" fill="#1F4A45" font-weight="600">IA Standards,</text>
+            <text x="70" y="95" text-anchor="middle" font-size="11" fill="#1F4A45" font-weight="600">Procedures &amp; Policies</text>
+            <path d="M130 85 L170 85" stroke="#E8632A" stroke-width="2" fill="none" marker-end="url(#arrow2)"/>
+            <defs><marker id="arrow2" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#E8632A"/></marker></defs>
+            <rect x="170" y="57" width="110" height="56" rx="8" fill="#1F4A45"/>
+            <text x="225" y="81" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">Copilot</text>
+            <text x="225" y="95" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">Knowledge Agent</text>
+            <path d="M280 85 L320 85" stroke="#E8632A" stroke-width="2" fill="none" marker-end="url(#arrow3)"/>
+            <defs><marker id="arrow3" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#E8632A"/></marker></defs>
+            <rect x="320" y="57" width="75" height="56" rx="8" fill="#FBEAD2" stroke="#EAA73D" stroke-width="1.5"/>
+            <text x="357" y="81" text-anchor="middle" font-size="11" fill="#9C4F70" font-weight="700">170+</text>
+            <text x="357" y="95" text-anchor="middle" font-size="11" fill="#9C4F70" font-weight="700">Auditors</text>
+            <text x="200" y="35" text-anchor="middle" font-size="11" fill="#7C7367">&ldquo;What's our policy on...?&rdquo; &rarr; sourced answer</text>
+          </svg>
+        </div>
+        <p>
+          Designed, trained, and deployed a Copilot-based AI agent that indexes Internal Audit
+          standards, procedures, and policy documentation, letting 170+ auditors ask natural-language
+          questions about department practices on demand. Also built the prompt library and rollout
+          plan used to train the department on the new tool.
+        </p>
+        <div class="relevance">
+          <b>Why it's relevant:</b> The same retrieval pattern RAD wants for newsroom staff &mdash; query
+          a structured archive in plain language and get a trustworthy, sourced answer.
+        </div>
+      </div>
+    </details>
+
+    <details class="project-card">
+      <summary>
+        <div class="card-blob">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs><clipPath id="blobD"><path d="M46 2 C70 0 92 18 96 42 C100 68 86 92 60 96 C34 100 8 84 4 58 C0 32 18 6 46 2 Z"/></clipPath></defs>
+            <g clip-path="url(#blobD)">
+              <image href="assets/blob-d.jpg" x="0" y="0" width="100" height="100" preserveAspectRatio="xMidYMid slice"/>
+            </g>
+          </svg>
+        </div>
+        <div class="card-title">
+          <div class="role-tag">Independent Project</div>
+          <h3>AI-Assisted Site Selection Analysis</h3>
+        </div>
+        <span class="expand-icon">+</span>
+      </summary>
+      <div class="card-detail">
+        <div class="diagram">
+          <svg viewBox="0 0 420 170" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:inherit;">
+            <rect x="10" y="20" width="110" height="50" rx="8" fill="#F3EEDD" stroke="#1F4A45" stroke-width="1.5"/>
+            <text x="65" y="40" text-anchor="middle" font-size="11" fill="#1F4A45" font-weight="600">Demographic</text>
+            <text x="65" y="55" text-anchor="middle" font-size="11" fill="#1F4A45" font-weight="600">Data</text>
+            <rect x="10" y="80" width="110" height="50" rx="8" fill="#F3EEDD" stroke="#1F4A45" stroke-width="1.5"/>
+            <text x="65" y="100" text-anchor="middle" font-size="11" fill="#1F4A45" font-weight="600">Economic &amp;</text>
+            <text x="65" y="115" text-anchor="middle" font-size="11" fill="#1F4A45" font-weight="600">Geographic Data</text>
+            <path d="M120 45 L160 75" stroke="#E8632A" stroke-width="2" fill="none"/>
+            <path d="M120 105 L160 75" stroke="#E8632A" stroke-width="2" fill="none"/>
+            <rect x="160" y="50" width="110" height="50" rx="8" fill="#1F4A45"/>
+            <text x="215" y="70" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">Claude Code</text>
+            <text x="215" y="85" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">Analysis</text>
+            <path d="M270 75 L300 75" stroke="#E8632A" stroke-width="2" fill="none" marker-end="url(#arrow4)"/>
+            <defs><marker id="arrow4" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#E8632A"/></marker></defs>
+            <rect x="300" y="40" width="115" height="70" rx="8" fill="#FBEAD2" stroke="#EAA73D" stroke-width="1.5"/>
+            <text x="357" y="68" text-anchor="middle" font-size="11" fill="#9C4F70" font-weight="700">Site</text>
+            <text x="357" y="83" text-anchor="middle" font-size="11" fill="#9C4F70" font-weight="700">Recommendations</text>
+          </svg>
+        </div>
+        <p>
+          Used Claude Code to combine demographic, economic, and geographic data to identify promising
+          new restaurant locations (Waffle House) in Southwest Virginia &mdash; an end-to-end example of
+          using generative AI to turn raw data into a concrete recommendation.
+        </p>
+        <div class="relevance">
+          <b>Why it's relevant:</b> Mirrors &ldquo;analyze historical data troves to surface evergreen
+          content opportunities and extract narrative leads.&rdquo;
+        </div>
+      </div>
+    </details>
+
+    <details class="project-card">
+      <summary>
+        <div class="card-blob">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs><clipPath id="blobE"><path d="M50 0 C78 4 98 26 96 52 C94 80 72 100 44 96 C16 92 -2 64 4 38 C10 14 26 -4 50 0 Z"/></clipPath></defs>
+            <g clip-path="url(#blobE)">
+              <image href="assets/blob-e.jpg" x="0" y="0" width="100" height="100" preserveAspectRatio="xMidYMid slice"/>
+            </g>
+          </svg>
+        </div>
+        <div class="card-title">
+          <div class="role-tag">Group Project &mdash; LPPS 3440 Propel, Group 6</div>
+          <h3>Waffle House Growth &amp; Talent Acquisition Strategy</h3>
+        </div>
+        <span class="expand-icon">+</span>
+      </summary>
+      <div class="card-detail">
+        <a class="doc-link" href="assets/lpps-waffle-house-project.pdf" target="_blank">View Full Presentation (PDF)</a>
+        <p>
+          As part of a five-person consulting team, helped design and run a 55-student survey
+          (UVA, Georgetown, Syracuse, Elon, Penn State) on early-career job preferences, then
+          synthesized the results into a talent-acquisition strategy for Waffle House: most students
+          prioritize salary and career growth, yet 71% said they wouldn't consider a restaurant
+          management role based on their current perception of it &mdash; even though it can pay
+          $100k+. I led the data-driven site-selection piece for Southwest Virginia, scoring candidate
+          locations (Christiansburg/Virginia Tech, a second Charlottesville site near UVA, and Radford)
+          against population, traffic, retail/hotel density, and college proximity to recommend
+          expansion sites.
+        </p>
+        <div class="relevance">
+          <b>Why it's relevant:</b> Shows the full pipeline RAD cares about &mdash; designing research
+          (a survey), synthesizing findings into clear takeaways, and turning data into a structured,
+          actionable recommendation, while working as part of a team.
+        </div>
+      </div>
+    </details>
+
+  </div>
+</section>
+
+<section id="writing">
+  <h2>Writing &amp; Research</h2>
+  <p class="lead">
+    Examples of independent research and public-facing writing.
+  </p>
+  <div class="writing-list">
+    <div class="writing-item">
+      <div>
+        <h3>Compulsory Attendance Policies Are Harmful to Students</h3>
+        <p>Opinion column, The Cavalier Daily (2024)</p>
+      </div>
+      <a href="https://www.cavalierdaily.com/article/2024/06/harbath-compulsory-attendance-policies-are-harmful-to-students" target="_blank">Read Article</a>
+    </div>
+    <div class="writing-item">
+      <div>
+        <h3>Inflation and Instrumentation: The Connection Between Money and Music</h3>
+        <p>Scholarship essay connecting economic cycles and music theory ($5,000 scholarship recipient)</p>
+      </div>
+      <a href="assets/inflation-and-instrumentation.pdf" target="_blank">Read Essay</a>
+    </div>
+    <div class="writing-item">
+      <div>
+        <h3>A Latte Opportunity: Improving Sustainability Through Domestic Production of Matcha</h3>
+        <p>AI-assisted research on the cost, revenue, and sustainability case for domestic matcha production</p>
+      </div>
+      <a href="assets/a-latte-opportunity-matcha.pdf" target="_blank">Read Research</a>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <h2>Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-cat">
+      <h4>AI Tools</h4>
+      <div class="tag-row">
+        <span class="tag">Claude / Claude Code</span>
+        <span class="tag">Copilot</span>
+        <span class="tag">ChatGPT</span>
+        <span class="tag">Gemini</span>
+        <span class="tag">Cursor</span>
+      </div>
+    </div>
+    <div class="skill-cat">
+      <h4>Data &amp; Analysis</h4>
+      <div class="tag-row">
+        <span class="tag">R</span>
+        <span class="tag">RStudio</span>
+        <span class="tag">Stata</span>
+        <span class="tag">Excel</span>
+        <span class="tag">Sheets</span>
+        <span class="tag">Tableau</span>
+        <span class="tag">Econometrics</span>
+        <span class="tag">Statistical Analysis</span>
+      </div>
+    </div>
+    <div class="skill-cat">
+      <h4>Documentation &amp; Standards</h4>
+      <div class="tag-row">
+        <span class="tag">Lucidchart</span>
+        <span class="tag">GRC</span>
+        <span class="tag">Process Mapping</span>
+        <span class="tag">SOX / Controls Frameworks</span>
+        <span class="tag">Jira</span>
+        <span class="tag">Optro</span>
+      </div>
+    </div>
+    <div class="skill-cat">
+      <h4>Languages</h4>
+      <div class="tag-row">
+        <span class="tag">English</span>
+        <span class="tag">Spanish (Professional)</span>
+        <span class="tag">Danish (Beginner)</span>
+        <span class="tag">Italian (Beginner)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="contact-wrap">
+    <h2>Contact</h2>
+    <p class="contact-lead">
+      Always open to chatting over a good cup of tea. I love to learn, hear interesting stories,
+      and listen to whatever is on your mind.
+    </p>
+    <div class="contact-links">
+      <a class="primary" href="mailto:julieharbath@gmail.com">julieharbath@gmail.com</a>
+      <a href="https://www.linkedin.com/in/julie-harbath/" target="_blank">LinkedIn</a>
+    </div>
+
+    <div class="yap-box">
+      <h3>Don't want to talk about AI, risks, or audit?</h3>
+      <p class="yap-sub">No problem &mdash; I'd be happy to yap about:</p>
+      <div class="yap-list">
+
+        <details class="yap-item">
+          <summary>
+            <span class="yap-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#F6E6D8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="8" y1="21" x2="16" y2="21"/></svg>
+            </span>
+            <span class="yap-text">Your favorite podcast</span>
+            <span class="yap-expand">+</span>
+          </summary>
+          <div class="yap-detail">
+            <p class="yap-detail-label">On rotation</p>
+            <ul class="yap-list-items">
+              <li><span class="title">Planet Money</span><span class="meta">NPR</span></li>
+              <li><span class="title">Hidden Brain</span><span class="meta">NPR</span></li>
+              <li><span class="title">Search Engine</span><span class="meta">PJ Vogt</span></li>
+            </ul>
+            <p class="yap-detail-label">On repeat</p>
+            <ul class="yap-list-items">
+              <li><span class="title">Boygenius</span><span class="meta">indie rock</span></li>
+              <li><span class="title">Noah Kahan</span><span class="meta">folk-pop</span></li>
+              <li><span class="title">Phoebe Bridgers</span><span class="meta">indie folk</span></li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="yap-item">
+          <summary>
+            <span class="yap-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#F6E6D8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5h6a3 3 0 013 3v13a3 3 0 00-3-3H4z"/><path d="M20 4.5h-6a3 3 0 00-3 3v13a3 3 0 013-3h6z"/></svg>
+            </span>
+            <span class="yap-text">A good book you've read recently &mdash; any genre</span>
+            <span class="yap-expand">+</span>
+          </summary>
+          <div class="yap-detail">
+            <p class="yap-detail-label">Currently reading</p>
+            <ul class="yap-list-items">
+              <li><span class="title">The Anthropocene Reviewed</span><span class="meta">John Green &middot; nonfiction essays</span></li>
+              <li><span class="title">Tomorrow, and Tomorrow, and Tomorrow</span><span class="meta">Gabrielle Zevin &middot; fiction</span></li>
+              <li><span class="title">&ldquo;How NPR Is Thinking About AI in the Archive&rdquo;</span><span class="meta">NPR Public Editor &middot; article</span></li>
+            </ul>
+          </div>
+        </details>
+
+        <!-- EDIT ME: swap in your current craft -->
+        <details class="yap-item">
+          <summary>
+            <span class="yap-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#F6E6D8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="8" cy="10.5" r="1" fill="#F6E6D8" stroke="none"/><circle cx="12" cy="7.5" r="1" fill="#F6E6D8" stroke="none"/><circle cx="16" cy="10.5" r="1" fill="#F6E6D8" stroke="none"/><path d="M8 15a4 4 0 008 0"/></svg>
+            </span>
+            <span class="yap-text">A craft you've done</span>
+            <span class="yap-expand">+</span>
+          </summary>
+          <div class="yap-detail">
+            <p class="yap-detail-label">Lately</p>
+            <ul class="yap-list-items">
+              <li><span class="title">Add yours here!</span><span class="meta">e.g., a recent project or hobby</span></li>
+            </ul>
+          </div>
+        </details>
+
+        <!-- EDIT ME: swap in how you've been moving lately -->
+        <details class="yap-item">
+          <summary>
+            <span class="yap-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#F6E6D8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2" fill="#F6E6D8" stroke="none"/><path d="M12 6.5v5l-3 7M12 11.5l3 7M9 12.5h6"/></svg>
+            </span>
+            <span class="yap-text">How you've moved your body recently</span>
+            <span class="yap-expand">+</span>
+          </summary>
+          <div class="yap-detail">
+            <p class="yap-detail-label">Lately</p>
+            <ul class="yap-list-items">
+              <li><span class="title">Add yours here!</span><span class="meta">e.g., a run, a hike, a new class</span></li>
+            </ul>
+          </div>
+        </details>
+
+        <!-- EDIT ME: swap in your favorite word in another language -->
+        <details class="yap-item">
+          <summary>
+            <span class="yap-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#F6E6D8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg>
+            </span>
+            <span class="yap-text">Your favorite word in a different language</span>
+            <span class="yap-expand">+</span>
+          </summary>
+          <div class="yap-detail">
+            <p class="yap-detail-label">Favorite word</p>
+            <ul class="yap-list-items">
+              <li><span class="title">Add yours here!</span><span class="meta">word &middot; language &middot; what it means</span></li>
+            </ul>
+          </div>
+        </details>
+
+        <!-- EDIT ME: swap in your favorite brain games -->
+        <details class="yap-item">
+          <summary>
+            <span class="yap-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#F6E6D8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h4V4.5a1.5 1.5 0 013 0V7h4v4h2.5a1.5 1.5 0 010 3H15v4h-4v-2.5a1.5 1.5 0 00-3 0V18H4v-4H1.5a1.5 1.5 0 010-3H4z"/></svg>
+            </span>
+            <span class="yap-text">Your favorite brain games</span>
+            <span class="yap-expand">+</span>
+          </summary>
+          <div class="yap-detail">
+            <p class="yap-detail-label">Daily ritual</p>
+            <ul class="yap-list-items">
+              <li><span class="title">Add yours here!</span><span class="meta">e.g., Connections, Wordle, a crossword</span></li>
+            </ul>
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
